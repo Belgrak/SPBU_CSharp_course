@@ -13,15 +13,12 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.0.x'
-          
-      - name: Install dependencies
-        run: dotnet restore
         
       - name: Build
-        run: dotnet build --no-restore
+        run: for file in `find ./ -type f -name "*.sln"`; do dotnet build $file; done
         
-      - name: Test
-        run: dotnet test --no-restore
+      - name: Tests
+        run: for file in `find ./ -type f -name "*.sln"`; do dotnet test $file; done
         
       - name: Dotnet format
-        run: dotnet format --no-restore --verify-no-changes
+        run: for file in `find ./ -type f -name "*.sln"`; do dotnet format $file; done
