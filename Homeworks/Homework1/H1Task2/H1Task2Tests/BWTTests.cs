@@ -33,7 +33,7 @@ public class Tests
 
     [Test]
     [Repeat(10)]
-    public void NegativeDataTest()
+    public void DirectAndReserveBWTTest()
     {
         var random = new Random();
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=";
