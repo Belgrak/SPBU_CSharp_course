@@ -2,6 +2,9 @@ namespace H1Task2
 {
     public static class BurrowsWheelerTransformation
     {
+        /// <summary>
+        /// Transform string using direct BWT
+        /// </summary>
         public static (string, int) Transform(string toTransform)
         {
             var result = string.Empty;
@@ -21,6 +24,9 @@ namespace H1Task2
             return (result, Array.IndexOf(suffixArray, 0));
         }
 
+        /// <summary>
+        /// Transform string using reverse BWT
+        /// </summary>
         public static string ReverseTransform(string toTransform, int index)
         {
             var result = string.Empty;
@@ -48,6 +54,9 @@ namespace H1Task2
             return result;
         }
 
+        /// <summary>
+        /// Create and sort suffix array
+        /// </summary>
         private static int[] CreateAndSortSuffixArray(string input)
         {
             var suffixArray = Enumerable.Range(0, input.Length).ToArray();
