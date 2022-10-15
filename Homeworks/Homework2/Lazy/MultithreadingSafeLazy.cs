@@ -1,5 +1,8 @@
 namespace Lazy;
 
+/// <summary>
+/// Represents Lazy, which will be safe in multithreading 
+/// </summary>
 public class MultithreadingSafeLazy<T> : ILazy<T>
 {
     private T? _object;
@@ -12,6 +15,8 @@ public class MultithreadingSafeLazy<T> : ILazy<T>
         _supplier = supplier;
     }
 
+    
+    /// <returns>First call value of <see cref="_supplier"/></returns>
     public T? Get()
     {
         if (IsValueCalculated) return _object;
