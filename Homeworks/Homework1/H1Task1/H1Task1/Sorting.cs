@@ -2,6 +2,9 @@ namespace H1Task1
 {
     public static class InsertionSort
     {
+        /// <summary>
+        /// Sorts the elements in the list of ints
+        /// </summary>
         public static IEnumerable<int> Sort(IList<int> listToSort)
         {
             for (var i = 1; i < listToSort.Count; i++)
