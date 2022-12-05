@@ -4,7 +4,6 @@ namespace ThreadPool;
 
 public class MyThreadPool
 {
-    private int _nThreads;
     private readonly ConcurrentQueue<Action> _queue;
     private readonly List<Thread> _threads;
     private readonly bool _isShutdown;
@@ -12,18 +11,18 @@ public class MyThreadPool
 
     public MyThreadPool(int threadsCount)
     {
-        _nThreads = threadsCount;
+        var nThreads = threadsCount;
         _queue = new ConcurrentQueue<Action>();
-        _threads = new List<Thread>(_nThreads);
+        _threads = new List<Thread>(nThreads);
         _isShutdown = false;
         _cts = new CancellationTokenSource();
-        for (var i = 0; i < _nThreads; i++)
+        for (var i = 0; i < nThreads; i++)
         {
             _threads.Add(new Thread(() =>
             {
                 while (!_cts.Token.IsCancellationRequested)
                 {
-                    if (!_queue.IsEmpty) continue;
+                    if (_queue.IsEmpty) continue;
                     _queue.TryDequeue(out var result);
                     result?.Invoke();
                 }

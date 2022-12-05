@@ -1,6 +1,6 @@
 namespace ThreadPool;
 
-public interface IMyTask<TResult>
+public interface IMyTask<out TResult>
 {
     public bool IsCompleted { get; }
     public TResult Result { get; }
