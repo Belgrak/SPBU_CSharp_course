@@ -5,18 +5,21 @@ public class MyTask<TResult> : IMyTask<TResult>
     public bool IsCompleted { get; private set; }
     private TResult CalculatedValue { get; set; }
     private readonly MyThreadPool _threadPool;
+    private readonly Func<TResult> _supplier;
+    private readonly object _locker = new();
 
     public TResult Result
     {
         get
         {
-            if (!IsCompleted) CalculateResult();
-            return CalculatedValue;
+            lock (_locker)
+            {
+                if (!IsCompleted) CalculateResult();
+                return CalculatedValue;
+            }
         }
     }
 
-    private readonly Func<TResult> _supplier;
-    private readonly object _locker = new();
 
     public MyTask(MyThreadPool myThreadPool, Func<TResult> supplier)
     {
@@ -26,18 +29,14 @@ public class MyTask<TResult> : IMyTask<TResult>
 
     public void CalculateResult()
     {
-        lock (_locker)
+        try
         {
-            try
-            {
-                CalculatedValue = _supplier();
-            }
-            catch (Exception e)
-            {
-                throw new AggregateException(e);
-            }
-
+            CalculatedValue = _supplier();
             IsCompleted = true;
+        }
+        catch (Exception e)
+        {
+            throw new AggregateException(e);
         }
     }
 

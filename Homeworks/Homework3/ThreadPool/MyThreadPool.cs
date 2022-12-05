@@ -2,7 +2,7 @@
 
 namespace ThreadPool;
 
-public class MyThreadPool : IDisposable
+public class MyThreadPool
 {
     private int _nThreads;
     private readonly ConcurrentQueue<Action> _queue;
@@ -48,11 +48,5 @@ public class MyThreadPool : IDisposable
         {
             thread.Join();
         }
-    }
-
-    public void Dispose()
-    {
-        if (_isShutdown) return;
-        Shutdown();
     }
 }
