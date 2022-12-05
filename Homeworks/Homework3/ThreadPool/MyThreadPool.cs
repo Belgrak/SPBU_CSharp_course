@@ -32,6 +32,12 @@ public class MyThreadPool
     }
 
 
+    /// <summary>
+    /// Adds a new task to a thread safe queue
+    /// </summary>
+    /// <param name="function">Input function</param>
+    /// <typeparam name="TResult">Type of the result</typeparam>
+    /// <returns></returns>
     public MyTask<TResult> Submit<TResult>(Func<TResult> function)
     {
         var newTask = new MyTask<TResult>(this, function);
@@ -39,6 +45,9 @@ public class MyThreadPool
         return newTask;
     }
 
+    /// <summary>
+    /// Stops threads work with a CancellationToken
+    /// </summary>
     public void Shutdown()
     {
         if (_isShutdown) return;
