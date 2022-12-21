@@ -16,32 +16,59 @@ public class Server
 
     private static async void List(NetworkStream stream, string path)
     {
-        var writer = new StreamWriter(stream);
+        using var streamWriter = new StreamWriter(stream);
         if (!Directory.Exists(path))
         {
-            await writer.WriteAsync("-1");
-            await writer.FlushAsync();
+            await streamWriter.WriteAsync("-1");
+            await streamWriter.FlushAsync();
             return;
         }
 
         var directories = Directory.GetDirectories(path);
         var files = Directory.GetFiles(path);
+        var size = directories.Length + files.Length;
 
-        await writer.WriteAsync((directories.Length + files.Length).ToString());
-        await writer.FlushAsync();
+        await streamWriter.WriteAsync(size.ToString());
+        await streamWriter.FlushAsync();
 
         foreach (var file in files)
         {
-            Console.WriteLine(file);
-            await writer.WriteAsync($" {file} false");
-            await writer.FlushAsync();
+            await streamWriter.WriteAsync($" {file} false");
+            await streamWriter.FlushAsync();
         }
 
         foreach (var directory in directories)
         {
-            await writer.WriteAsync($" {directory} true");
-            await writer.FlushAsync();
+            await streamWriter.WriteAsync($" {directory} true");
+            await streamWriter.FlushAsync();
         }
+        
+        // var writer = new StreamWriter(stream);
+        // if (!Directory.Exists(path))
+        // {
+        //     await writer.WriteAsync("-1");
+        //     await writer.FlushAsync();
+        //     return;
+        // }
+        //
+        // var directories = Directory.GetDirectories(path);
+        // var files = Directory.GetFiles(path);
+        //
+        // await writer.WriteAsync((directories.Length + files.Length).ToString());
+        // await writer.FlushAsync();
+        //
+        // foreach (var file in files)
+        // {
+        //     Console.WriteLine(file);
+        //     await writer.WriteAsync($" {file} false");
+        //     await writer.FlushAsync();
+        // }
+        //
+        // foreach (var directory in directories)
+        // {
+        //     await writer.WriteAsync($" {directory} true");
+        //     await writer.FlushAsync();
+        // }
     }
 
     private static async void Get(NetworkStream stream, string path)
@@ -68,6 +95,37 @@ public class Server
 
     public async void StartListen()
     {
+        var tcpListener = new TcpListener(_ipAddress, _port);
+        tcpListener.Start();
+        while (true)
+        {
+            using var socket = tcpListener.AcceptSocket();
+            Console.WriteLine(socket.AddressFamily);
+            await using var newtworkStream = new NetworkStream(socket);
+            using var streamReader = new StreamReader(newtworkStream);
+            var strings = (streamReader.ReadLine())?.Split(' ');
+            
+            if (strings == null || strings.Length != 2)
+            {
+                continue;
+            }
+
+            var msgType = strings[0];
+            if (msgType == "1")
+            {
+                Console.WriteLine("list");
+                await Task.Run(() => List(newtworkStream, strings[1]));
+            }
+
+            if (msgType == "2")
+            {
+                Console.WriteLine("get");
+                await Task.Run(() => Get(newtworkStream, strings[1]));
+            }
+        }
+        
+        tcpListener.Stop();
+        
         var listener = new TcpListener(_ipAddress, _port);
         listener.Start();
         Console.WriteLine("I'm listening");
@@ -85,16 +143,20 @@ public class Server
                 continue;
             }
 
-            if (listOfArguments[0] == "1")
+            switch (listOfArguments[0])
             {
-                Console.WriteLine("list");
-                await Task.Run(() => List(stream, listOfArguments[1]));
-            }
-
-            if (listOfArguments[0] == "2")
-            {
-                Console.WriteLine("get");
-                await Task.Run(() => Get(stream, listOfArguments[1]));
+                case "1":
+                {
+                    Console.WriteLine("list");
+                    await Task.Run(() => List(stream, listOfArguments[1]));
+                    break;
+                }
+                case "2":
+                {
+                    Console.WriteLine("get");
+                    await Task.Run(() => Get(stream, listOfArguments[1]));
+                    break;
+                }
             }
         }
 
