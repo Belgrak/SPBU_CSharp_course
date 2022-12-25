@@ -1,0 +1,40 @@
+@page
+@using GradeApp.Pages
+@model GradeApp.Pages.ListGrades
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>List of grades --- Grade App</title>
+</head>
+<body>
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+    <h2>List of grades:</h2>
+    <table style="margin: 10px 10px 10px 10px">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Subject</th>
+            <th>Grade</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (GradeApp.Data.Grade p in Model.Grades)
+        {
+            <tr>
+                <td>@p.Name</td>
+                <td>@p.Subject</td>
+                <td>@p.Value</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

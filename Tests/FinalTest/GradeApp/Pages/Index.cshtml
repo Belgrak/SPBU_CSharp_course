@@ -1,0 +1,27 @@
+@page
+@model GradeApp.Pages.Index
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>GradeApp</title>
+</head>
+<body>
+<div style="height: max-content; display: flex; flex-direction: column; justify-content: center; align-items: center">
+    <h1 style="text-align: center">GradeApp</h1>
+    <button style="margin: 100px 10px 10px 10px">
+        <a asp-page="ResultsInput" style="text-decoration: none; color: black">Add grade</a>
+    </button>
+    <button style="margin: 10px 10px 10px 10px">
+        <a asp-page="ListGrades" style="text-decoration: none; color: black">Table of grades</a>
+    </button>
+</div>
+</body>
+</html>

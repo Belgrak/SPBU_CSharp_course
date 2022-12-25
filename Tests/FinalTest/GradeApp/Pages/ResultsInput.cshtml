@@ -1,0 +1,42 @@
+@page
+@model GradeApp.Pages.ResultsInput
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Input Results --- Grade App</title>
+</head>
+<body>
+<form method="post" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+    <div>
+        <span asp-validation-for="Grade.Name" style="color: darkred"></span>
+        <p style="margin: 10px 10px 10px 10px">
+            <label asp-for="Grade.Name">Student name:</label>
+            <input asp-for="Grade.Name"/>
+        </p>
+    </div>
+    <div>
+        <span asp-validation-for="Grade.Subject" style="color: darkred"></span>
+        <p style="margin: 10px 10px 10px 10px">
+            <label asp-for="Grade.Subject">Subject:</label>
+            <input asp-for="Grade.Subject"/>
+        </p>
+    </div>
+    <div>
+        <span asp-validation-for="Grade.Value" style="color: darkred"></span>
+        <p style="margin: 10px 10px 10px 10px">
+            <label asp-for="Grade.Value">Grade:</label>
+            <input asp-for="Grade.Value"/>
+        </p>
+    </div>
+    <button type="submit">Add grade</button>
+</form>
+</body>
+</html>
