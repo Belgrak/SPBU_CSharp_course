@@ -12,15 +12,16 @@
 <head>
     <meta name="viewport" content="width=device-width"/>
     <title>GradeApp</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
 </head>
 <body>
-<div style="height: max-content; display: flex; flex-direction: column; justify-content: center; align-items: center">
+<div style="margin-top: 50px; height: max-content; display: flex; flex-direction: column; justify-content: center; align-items: center">
     <h1 style="text-align: center">GradeApp</h1>
-    <button style="margin: 100px 10px 10px 10px">
-        <a asp-page="ResultsInput" style="text-decoration: none; color: black">Add grade</a>
+    <button class="btn btn-primary" style="margin: 100px 10px 10px 10px">
+        <a asp-page="ResultsInput" style="text-decoration: none; color: white">Add grade</a>
     </button>
-    <button style="margin: 10px 10px 10px 10px">
-        <a asp-page="ListGrades" style="text-decoration: none; color: black">Table of grades</a>
+    <button class="btn btn-primary" style="margin: 10px 10px 10px 10px">
+        <a asp-page="ListGrades" style="text-decoration: none; color: white">Table of grades</a>
     </button>
 </div>
 </body>

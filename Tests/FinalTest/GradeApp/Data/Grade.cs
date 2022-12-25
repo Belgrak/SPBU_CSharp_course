@@ -13,6 +13,6 @@ public class Grade
     public string Subject { get; set; } = "";
 
     [Required(ErrorMessage = "Please enter grade value")]
-    [Range(0, 10, ErrorMessage = "Please enter a valid grade value")]
+    [Range(0, 10, ErrorMessage = "Please enter a valid grade value. From 0 to 10.")]
     public string Value { get; set; } = "";
 }

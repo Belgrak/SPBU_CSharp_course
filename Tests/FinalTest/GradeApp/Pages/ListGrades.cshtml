@@ -12,16 +12,17 @@
 <head>
     <meta name="viewport" content="width=device-width"/>
     <title>List of grades --- Grade App</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
 </head>
 <body>
-<div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+<div style="margin-top: 50px; display: flex; flex-direction: column; justify-content: center; align-items: center">
     <h2>List of grades:</h2>
-    <table style="margin: 10px 10px 10px 10px">
+    <table class="table table-hover" style="margin: 10px 10px 10px 10px; max-width: 80%">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Subject</th>
-            <th>Grade</th>
+            <th scope="col">Name</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Grade</th>
         </tr>
         </thead>
         <tbody>
